@@ -1,0 +1,40 @@
+modules = ["nodejs-20", "python-3.12", "web"]
+run = "make dev"
+compile = "pip install -e ./backend && npm install --prefix frontend"
+
+[nix]
+channel = "stable-24_05"
+packages = ["lsof"]
+
+[deployment]
+run = ["sh", "-c", "make dev"]
+build = ["sh", "-c", "pip install -e ./backend && npm install --prefix frontend"]
+
+[[ports]]
+localPort = 2024
+externalPort = 3000
+exposeLocalhost = true
+
+[[ports]]
+localPort = 3000
+externalPort = 4200
+
+[[ports]]
+localPort = 4200
+externalPort = 5000
+
+[[ports]]
+localPort = 5173
+externalPort = 80
+
+[[ports]]
+localPort = 5174
+externalPort = 3001
+
+[[ports]]
+localPort = 5175
+externalPort = 3002
+
+[[ports]]
+localPort = 5176
+externalPort = 3003
