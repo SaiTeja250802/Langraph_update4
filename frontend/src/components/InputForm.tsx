@@ -12,10 +12,11 @@ import {
 
 // Updated InputFormProps
 interface InputFormProps {
-  onSubmit: (inputValue: string, effort: string, model: string) => void;
+  onSubmit: (inputValue: string, effort: string, model: string, category?: string) => void;
   onCancel: () => void;
   isLoading: boolean;
   hasHistory: boolean;
+  selectedCategory?: string;
 }
 
 export const InputForm: React.FC<InputFormProps> = ({
