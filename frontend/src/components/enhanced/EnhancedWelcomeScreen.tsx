@@ -4,6 +4,7 @@ import { InputForm } from '../InputForm';
 import { CategoryButtons } from './CategoryButtons';
 import { ChatHistoryPanel } from './ChatHistoryPanel';
 import { UserProfile } from './UserProfile';
+import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/authStore';
 import { useConversationStore } from '@/store/conversationStore';
 import { 
