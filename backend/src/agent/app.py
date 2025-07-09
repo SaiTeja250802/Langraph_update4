@@ -5,8 +5,8 @@ from fastapi import FastAPI, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
-from .database import init_db
-from .api_routes import router as api_router
+from agent.database import init_db
+from agent.api_routes import router as api_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
