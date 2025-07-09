@@ -230,6 +230,8 @@ interface ChatMessagesViewProps {
   onCancel: () => void;
   liveActivityEvents: ProcessedEvent[];
   historicalActivities: Record<string, ProcessedEvent[]>;
+  onShowResearchHub?: () => void;
+  onShowHistory?: () => void;
 }
 
 export function ChatMessagesView({
