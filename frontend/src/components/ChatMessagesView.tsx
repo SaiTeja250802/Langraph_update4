@@ -315,6 +315,29 @@ export function ChatMessagesView({
             )}
         </div>
       </ScrollArea>
+      
+      {/* Navigation Buttons */}
+      {(onShowResearchHub || onShowHistory) && (
+        <div className="flex justify-center space-x-4 mb-4">
+          {onShowResearchHub && (
+            <Button
+              onClick={onShowResearchHub}
+              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-4 py-2 rounded-lg font-semibold transition-all duration-300"
+            >
+              Research Hub
+            </Button>
+          )}
+          {onShowHistory && (
+            <Button
+              onClick={onShowHistory}
+              className="bg-neutral-800 hover:bg-neutral-700 text-white border border-neutral-600 px-4 py-2 rounded-lg font-semibold transition-all duration-300"
+            >
+              History
+            </Button>
+          )}
+        </div>
+      )}
+      
       <InputForm
         onSubmit={onSubmit}
         isLoading={isLoading}
