@@ -26,6 +26,8 @@ interface EnhancedWelcomeScreenProps {
   ) => void;
   onCancel: () => void;
   isLoading: boolean;
+  onShowResearchHub: () => void;
+  onShowHistory: () => void;
 }
 
 export const EnhancedWelcomeScreen: React.FC<EnhancedWelcomeScreenProps> = ({
