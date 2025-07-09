@@ -24,6 +24,7 @@ export const InputForm: React.FC<InputFormProps> = ({
   onCancel,
   isLoading,
   hasHistory,
+  selectedCategory,
 }) => {
   const [internalInputValue, setInternalInputValue] = useState("");
   const [effort, setEffort] = useState("medium");
