@@ -14,7 +14,7 @@ import { useConversationStore } from "@/store/conversationStore";
 
 export default function App() {
   const { isAuthenticated } = useAuthStore();
-  const { createConversation, addMessageToConversation } = useConversationStore();
+  const { createConversation, addMessageToConversation, getConversation } = useConversationStore();
   const [processedEventsTimeline, setProcessedEventsTimeline] = useState<
     ProcessedEvent[]
   >([]);
@@ -22,6 +22,8 @@ export default function App() {
     Record<string, ProcessedEvent[]>
   >({});
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
+  const [showResearchHub, setShowResearchHub] = useState(false);
+  const [showHistorySidebar, setShowHistorySidebar] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const hasFinalizeEventOccurredRef = useRef(false);
   const [error, setError] = useState<string | null>(null);
