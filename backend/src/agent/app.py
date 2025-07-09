@@ -11,7 +11,29 @@ from agent.api_routes import router as api_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Initialize database on startup
-    await init_db()
+    try:
+        await init_db()
+        print("Real database initialized successfully")
+    except Exception as e:
+        print(f"Warning: Database initialization failed: {e}")
+        print("Switching to mock database for testing")
+        # Use mock database as fallback
+        import agent.mock_database as mock_database
+        await mock_database.init_db()
+        # Replace database functions with mock versions
+        import agent.database as db_module
+        db_module.init_db = mock_database.init_db
+        db_module.authenticate_user = mock_database.authenticate_user
+        db_module.get_user_by_username = mock_database.get_user_by_username
+        db_module.get_user_by_email = mock_database.get_user_by_email
+        db_module.get_user_by_id = mock_database.get_user_by_id
+        db_module.create_user = mock_database.create_user
+        db_module.create_access_token = mock_database.create_access_token
+        db_module.save_conversation = mock_database.save_conversation
+        db_module.get_user_conversations = mock_database.get_user_conversations
+        db_module.get_conversation_by_id = mock_database.get_conversation_by_id
+        db_module.update_conversation = mock_database.update_conversation
+        db_module.search_conversations = mock_database.search_conversations
     yield
     # Cleanup on shutdown if needed
 

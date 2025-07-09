@@ -1,4 +1,3 @@
-import React from "react";
 import { useStream } from "@langchain/langgraph-sdk/react";
 import type { Message } from "@langchain/langgraph-sdk";
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -239,7 +238,7 @@ export default function App() {
         isOpen={showHistorySidebar}
         onToggle={() => setShowHistorySidebar(!showHistorySidebar)}
         onConversationSelect={handleConversationSelect}
-        currentConversationId={currentConversationId}
+        currentConversationId={currentConversationId || undefined}
       />
 
       <main className="h-full w-full max-w-6xl mx-auto relative">
