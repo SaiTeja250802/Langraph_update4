@@ -1,11 +1,39 @@
 # mypy: disable - error - code = "no-untyped-def,misc"
 import pathlib
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Response
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+
+from .database import init_db
+from .api_routes import router as api_router
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize database on startup
+    await init_db()
+    yield
+    # Cleanup on shutdown if needed
 
 # Define the FastAPI app
-app = FastAPI()
+app = FastAPI(
+    title="LangGraph Research API",
+    description="Advanced AI-powered research assistant with authentication and conversation management",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:5173", "http://localhost:2024"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include API routes
+app.include_router(api_router)
 
 def create_frontend_router(build_dir="../frontend/dist"):
     """Creates a router to serve the React frontend.
