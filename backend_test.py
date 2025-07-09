@@ -16,6 +16,9 @@ import pytest
 import httpx
 import asyncio
 from fastapi.testclient import TestClient
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), 'backend', 'src'))
 from agent.app import app
 
 # Create a test client
