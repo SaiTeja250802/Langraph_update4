@@ -12,17 +12,11 @@ This test script covers:
 import os
 import sys
 import json
-import pytest
-import httpx
-import asyncio
-from fastapi.testclient import TestClient
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), 'backend', 'src'))
-from agent.app import app
+import requests
+import time
 
-# Create a test client
-client = TestClient(app)
+# Base URL for API requests
+BASE_URL = "http://localhost:8001"
 
 # Test data
 TEST_USER = {
@@ -59,7 +53,7 @@ def test_01_user_registration():
     print("\n--- Testing User Registration ---")
     
     # Try to register a new user
-    response = client.post("/api/auth/register", json=TEST_USER)
+    response = requests.post(f"{BASE_URL}/api/auth/register", json=TEST_USER)
     
     # If user already exists, this is fine for our test
     if response.status_code == 400 and "already registered" in response.text:
@@ -84,7 +78,7 @@ def test_02_user_login():
     
     print("\n--- Testing User Login ---")
     
-    response = client.post("/api/auth/login", json=LOGIN_DATA)
+    response = requests.post(f"{BASE_URL}/api/auth/login", json=LOGIN_DATA)
     assert response.status_code == 200, f"Login failed: {response.text}"
     
     data = response.json()
@@ -107,8 +101,8 @@ def test_03_get_current_user():
     if not auth_token:
         test_02_user_login()
     
-    response = client.get(
-        "/api/auth/me", 
+    response = requests.get(
+        f"{BASE_URL}/api/auth/me", 
         headers={"Authorization": f"Bearer {auth_token}"}
     )
     assert response.status_code == 200, f"Get current user failed: {response.text}"
@@ -128,8 +122,8 @@ def test_04_create_conversation():
     if not auth_token:
         test_02_user_login()
     
-    response = client.post(
-        "/api/conversations", 
+    response = requests.post(
+        f"{BASE_URL}/api/conversations", 
         json=TEST_CONVERSATION,
         headers={"Authorization": f"Bearer {auth_token}"}
     )
@@ -156,8 +150,8 @@ def test_05_add_message_to_conversation():
     if not conversation_id:
         test_04_create_conversation()
     
-    response = client.post(
-        f"/api/conversations/{conversation_id}/messages", 
+    response = requests.post(
+        f"{BASE_URL}/api/conversations/{conversation_id}/messages", 
         json=TEST_MESSAGE,
         headers={"Authorization": f"Bearer {auth_token}"}
     )
@@ -176,8 +170,8 @@ def test_06_get_conversation():
         test_04_create_conversation()
         test_05_add_message_to_conversation()
     
-    response = client.get(
-        f"/api/conversations/{conversation_id}",
+    response = requests.get(
+        f"{BASE_URL}/api/conversations/{conversation_id}",
         headers={"Authorization": f"Bearer {auth_token}"}
     )
     assert response.status_code == 200, f"Get conversation failed: {response.text}"
@@ -203,8 +197,8 @@ def test_07_get_user_conversations():
     if not conversation_id:
         test_04_create_conversation()
     
-    response = client.get(
-        "/api/conversations",
+    response = requests.get(
+        f"{BASE_URL}/api/conversations",
         headers={"Authorization": f"Bearer {auth_token}"}
     )
     assert response.status_code == 200, f"Get conversations failed: {response.text}"
@@ -235,8 +229,8 @@ def test_08_search_conversations():
         "category": "market-research"
     }
     
-    response = client.post(
-        "/api/conversations/search", 
+    response = requests.post(
+        f"{BASE_URL}/api/conversations/search", 
         json=search_query,
         headers={"Authorization": f"Bearer {auth_token}"}
     )
@@ -263,8 +257,8 @@ def test_09_category_trending_topics():
     if not auth_token:
         test_02_user_login()
     
-    response = client.get(
-        "/api/categories/trending",
+    response = requests.get(
+        f"{BASE_URL}/api/categories/trending",
         headers={"Authorization": f"Bearer {auth_token}"}
     )
     assert response.status_code == 200, f"Get trending topics failed: {response.text}"
@@ -287,8 +281,8 @@ def test_10_category_sports_topics():
     if not auth_token:
         test_02_user_login()
     
-    response = client.get(
-        "/api/categories/sports",
+    response = requests.get(
+        f"{BASE_URL}/api/categories/sports",
         headers={"Authorization": f"Bearer {auth_token}"}
     )
     assert response.status_code == 200, f"Get sports topics failed: {response.text}"
@@ -311,8 +305,8 @@ def test_11_category_technology_topics():
     if not auth_token:
         test_02_user_login()
     
-    response = client.get(
-        "/api/categories/technology",
+    response = requests.get(
+        f"{BASE_URL}/api/categories/technology",
         headers={"Authorization": f"Bearer {auth_token}"}
     )
     assert response.status_code == 200, f"Get technology topics failed: {response.text}"
@@ -335,11 +329,11 @@ def test_12_invalid_auth():
         "password": "invalid_password"
     }
     
-    response = client.post("/api/auth/login", json=invalid_login)
+    response = requests.post(f"{BASE_URL}/api/auth/login", json=invalid_login)
     assert response.status_code == 401, "Invalid login should be rejected"
     
     # Test protected endpoint without token
-    response = client.get("/api/conversations")
+    response = requests.get(f"{BASE_URL}/api/conversations")
     assert response.status_code == 401, "Unauthorized access should be rejected"
     
     print("Invalid authentication tests passed")
@@ -357,8 +351,8 @@ def test_13_invalid_conversation_access():
     # Test with non-existent conversation ID
     fake_id = "000000000000000000000000"  # 24-character fake ObjectId
     
-    response = client.get(
-        f"/api/conversations/{fake_id}",
+    response = requests.get(
+        f"{BASE_URL}/api/conversations/{fake_id}",
         headers={"Authorization": f"Bearer {auth_token}"}
     )
     assert response.status_code == 404, "Non-existent conversation should return 404"
@@ -389,5 +383,10 @@ def run_tests():
 
 if __name__ == "__main__":
     print("Starting Research AI Backend Tests...")
+    
+    # Wait for backend to be fully initialized
+    print("Waiting for backend to initialize...")
+    time.sleep(2)
+    
     success = run_tests()
     sys.exit(0 if success else 1)
