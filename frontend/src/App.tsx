@@ -194,10 +194,34 @@ export default function App() {
     [thread, createConversation, addMessageToConversation, currentConversationId]
   );
 
-  const handleCancel = useCallback(() => {
-    thread.stop();
-    window.location.reload();
-  }, [thread]);
+  const handleConversationSelect = useCallback(async (conversationId: string) => {
+    try {
+      await getConversation(conversationId);
+      setCurrentConversationId(conversationId);
+      setShowHistorySidebar(false);
+      setShowResearchHub(false);
+      // Here you would typically load the conversation messages into the chat view
+      // For now, we'll just log it
+      console.log('Loading conversation:', conversationId);
+    } catch (error) {
+      console.error('Error loading conversation:', error);
+    }
+  }, [getConversation]);
+
+  const handleResearchStart = useCallback((query: string, category: string, effort: string) => {
+    setShowResearchHub(false);
+    handleSubmit(query, effort, 'gemini-2.5-flash-preview-04-17', category);
+  }, []);
+
+  const handleShowResearchHub = useCallback(() => {
+    setShowResearchHub(true);
+    setShowHistorySidebar(false);
+  }, []);
+
+  const handleShowHistory = useCallback(() => {
+    setShowHistorySidebar(true);
+    setShowResearchHub(false);
+  }, []);
 
   // Show auth page if not authenticated
   if (!isAuthenticated) {
