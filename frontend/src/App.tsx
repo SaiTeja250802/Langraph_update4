@@ -4,6 +4,8 @@ import type { Message } from "@langchain/langgraph-sdk";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ProcessedEvent } from "@/components/ActivityTimeline";
 import { EnhancedWelcomeScreen } from "@/components/enhanced/EnhancedWelcomeScreen";
+import { ResearchHub } from "@/components/enhanced/ResearchHub";
+import { ConversationHistorySidebar } from "@/components/enhanced/ConversationHistorySidebar";
 import { ChatMessagesView } from "@/components/ChatMessagesView";
 import { AuthPage } from "@/components/auth/AuthPage";
 import { Button } from "@/components/ui/button";
