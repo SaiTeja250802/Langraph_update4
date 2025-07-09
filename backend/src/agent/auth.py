@@ -4,7 +4,7 @@ from typing import Optional
 from fastapi import HTTPException, status, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError, jwt
-from .database import (
+from agent.database import (
     JWT_SECRET, JWT_ALGORITHM, get_user_by_id, UserInDB, UserResponse
 )
 
