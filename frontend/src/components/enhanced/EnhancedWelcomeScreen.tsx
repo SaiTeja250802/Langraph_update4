@@ -34,6 +34,8 @@ export const EnhancedWelcomeScreen: React.FC<EnhancedWelcomeScreenProps> = ({
   handleSubmit,
   onCancel,
   isLoading,
+  onShowResearchHub,
+  onShowHistory,
 }) => {
   const { user } = useAuthStore();
   const { conversations, fetchConversations } = useConversationStore();
