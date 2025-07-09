@@ -34,7 +34,7 @@ export default function App() {
     max_research_loops: number;
     reasoning_model: string;
   }>({
-    apiUrl: import.meta.env.VITE_BACKEND_URL || "http://localhost:2024",
+    apiUrl: import.meta.env.VITE_BACKEND_URL || "http://localhost:8001",
     assistantId: "agent",
     messagesKey: "messages",
     onUpdateEvent: (event: any) => {
