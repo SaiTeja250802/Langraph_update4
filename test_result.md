@@ -163,7 +163,9 @@ test_plan:
     - "Database Integration"
     - "Search Functionality"
     - "Category-Specific Endpoints"
-  stuck_tasks: []
+    - "Research Hub Navigation"
+  stuck_tasks:
+    - "Research Hub Navigation"
   test_all: false
   test_priority: "high_first"
 
@@ -172,6 +174,8 @@ agent_communication:
     message: "Starting comprehensive backend testing for the Research AI application."
   - agent: "testing"
     message: "All backend tests have passed successfully. The backend API is functioning correctly with proper authentication, conversation management, search functionality, and category-specific endpoints."
+  - agent: "testing"
+    message: "Frontend testing completed. Authentication flow and responsive design are working correctly, but Research Hub navigation has issues. The Research Hub button is not found on the welcome screen, preventing further testing of conversation history and AI research integration."
 
 ## Final Testing Status - COMPLETED ✅
 
