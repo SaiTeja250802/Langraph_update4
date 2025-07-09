@@ -230,12 +230,27 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-neutral-800 text-neutral-100 font-sans antialiased">
+      {/* Conversation History Sidebar */}
+      <ConversationHistorySidebar
+        isOpen={showHistorySidebar}
+        onToggle={() => setShowHistorySidebar(!showHistorySidebar)}
+        onConversationSelect={handleConversationSelect}
+        currentConversationId={currentConversationId}
+      />
+
       <main className="h-full w-full max-w-6xl mx-auto relative">
-        {thread.messages.length === 0 ? (
+        {showResearchHub ? (
+          <ResearchHub
+            onResearchStart={handleResearchStart}
+            onShowHistory={handleShowHistory}
+          />
+        ) : thread.messages.length === 0 ? (
           <EnhancedWelcomeScreen
             handleSubmit={handleSubmit}
             isLoading={thread.isLoading}
             onCancel={handleCancel}
+            onShowResearchHub={handleShowResearchHub}
+            onShowHistory={handleShowHistory}
           />
         ) : error ? (
           <div className="flex flex-col items-center justify-center h-full">
@@ -259,6 +274,8 @@ export default function App() {
             onCancel={handleCancel}
             liveActivityEvents={processedEventsTimeline}
             historicalActivities={historicalActivities}
+            onShowResearchHub={handleShowResearchHub}
+            onShowHistory={handleShowHistory}
           />
         )}
       </main>
