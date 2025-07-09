@@ -22,7 +22,7 @@ def get_backend_url():
         for line in f:
             if line.startswith('VITE_BACKEND_URL='):
                 return line.strip().split('=')[1]
-    return "http://localhost:2024"  # Default fallback
+    return "http://localhost:8001"  # Default fallback
 
 # Base URL for API requests
 BASE_URL = f"{get_backend_url()}/api"
