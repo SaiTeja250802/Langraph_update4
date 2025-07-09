@@ -25,7 +25,7 @@ interface AuthState {
   setLoading: (loading: boolean) => void;
 }
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8001';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:2024';
 
 export const useAuthStore = create<AuthState>()(
   persist(
