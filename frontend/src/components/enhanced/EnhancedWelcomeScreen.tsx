@@ -166,6 +166,29 @@ export const EnhancedWelcomeScreen: React.FC<EnhancedWelcomeScreenProps> = ({
         </div>
       </motion.div>
 
+      {/* Quick Actions */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="flex justify-center space-x-4 mb-8"
+      >
+        <Button
+          onClick={onShowResearchHub}
+          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+        >
+          <Brain className="w-5 h-5 mr-2" />
+          Research Hub
+        </Button>
+        <Button
+          onClick={onShowHistory}
+          className="bg-neutral-800 hover:bg-neutral-700 text-white border border-neutral-600 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+        >
+          <History className="w-5 h-5 mr-2" />
+          History
+        </Button>
+      </motion.div>
+
       {/* Category Buttons */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
