@@ -223,6 +223,10 @@ export default function App() {
     setShowResearchHub(false);
   }, []);
 
+  const handleCancel = useCallback(() => {
+    thread.stop();
+  }, [thread]);
+
   // Show auth page if not authenticated
   if (!isAuthenticated) {
     return <AuthPage />;
