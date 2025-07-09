@@ -365,10 +365,8 @@ def test_13_invalid_conversation_access():
     
     print("Invalid conversation access tests passed")
 
-if __name__ == "__main__":
-    print("Starting Research AI Backend Tests...")
-    
-    # Run all tests in order
+def run_tests():
+    """Run all tests in sequence."""
     try:
         test_01_user_registration()
         test_02_user_login()
@@ -384,7 +382,12 @@ if __name__ == "__main__":
         test_12_invalid_auth()
         test_13_invalid_conversation_access()
         print("\n✅ All tests passed successfully!")
-        sys.exit(0)
+        return True
     except AssertionError as e:
         print(f"\n❌ Test failed: {e}")
-        sys.exit(1)
+        return False
+
+if __name__ == "__main__":
+    print("Starting Research AI Backend Tests...")
+    success = run_tests()
+    sys.exit(0 if success else 1)
