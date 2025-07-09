@@ -6,13 +6,13 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import HTTPBearer
 from pydantic import BaseModel
 
-from .database import (
+from agent.database import (
     UserCreate, UserLogin, UserResponse, ConversationInDB, ConversationMessage,
     create_user, authenticate_user, get_user_by_username, get_user_by_email,
     create_access_token, save_conversation, get_user_conversations,
     get_conversation_by_id, update_conversation, search_conversations
 )
-from .auth import get_current_active_user, create_user_response
+from agent.auth import get_current_active_user, create_user_response
 
 router = APIRouter()
 security = HTTPBearer()
